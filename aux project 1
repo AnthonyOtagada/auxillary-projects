@@ -1,0 +1,176 @@
+## AUX PROJECT 1: SHELL SCRIPTING
+
+### Ask the user for their name and age, and output a message with their name and the year they were born.
+
+`#!/bin/bash`
+# Ask the user for their name
+`echo "Please enter your name: "
+read name`
+
+# Ask the user for their age
+`echo "Please enter your age: "
+read age`
+
+# Calculate the birth year
+`current_year=$(date +'%Y')
+birth_year=$((current_year - age))`
+
+# output a message with their name and the year they were born.
+`echo "Hello, $name! You were born in $birth_year."`
+
+![1](./images/1.png)
+
+![2](./images/2.png)
+
+# Create the directory
+# Create the directory
+`mkdir "$name"`
+
+# Check if the directory was created successfully
+`if [ $? -eq 0 ]; then
+  echo "Directory '$name' created successfully."`
+  
+  # Navigate into the new directory
+  `cd "$name"`
+  
+  # Display the current working directory to confirm navigation
+ ` echo "You are now in: $(pwd)"
+else
+  echo "Failed to create directory '$name'."
+fi`
+
+# List all files in the current directory, sorted by file size
+`ls -lsh /c/Users/k/Desktop/otasman_learning/shell`
+
+# Count the number of files in the current directory and output the result.
+# Use ls to list files in the current directory and pipe the output to wc -l
+`file_count=$(ls -1 | wc -l)`
+# Output the result
+`echo "Number of files in the current directory: $file_count"`
+
+![3](./images/3.png)
+
+
+# Take a list of numbers as input from the user and output the sum of those numbers.
+# Initialize a variable to store the sum
+`sum=0`
+
+# Prompt the user to enter numbers separated by spaces
+`echo "Enter a list of numbers separated by spaces:"
+read input`
+
+# Use a for loop to iterate through the input numbers
+`for number in $input; do`
+  # Check if the input is a valid number
+  `if [[ $number =~ ^[0-9]*(\.[0-9]+)?$ ]]; then
+    # Add the number to the sum
+    sum=$(awk "BEGIN {print $sum + $number; exit}")
+  else
+    echo "Invalid input: '$number' is not a valid number."
+  fi
+done`
+
+# Display the sum
+`echo "The sum of the numbers is: $sum"`
+
+# Generate a random number between 1 and 100
+`random_number=$(shuf -i 1-100 -n 1)
+`
+# Display the random number
+`echo "Random number between 1 and 100: $random_number"`
+
+![4](./images/4.png)
+
+# Create a backup of a specified file by copying it to a backup directory with a timestamp in the filename.
+
+# Specify the source file you want to backup
+`source_file="/c/Users/k/Desktop/otasman_learning/index.html"`
+
+# Specify the backup directory
+`backup_dir="/c/Users/k/Desktop/otasman_learning/backup"`
+
+# Create a timestamp in the format YYYYMMDDHHMMSS
+`timestamp=$(date +"%Y%m%d%H%M%S")`
+
+# Get the filename without the path
+`filename=$(basename "$source_file")`
+
+# Create the backup filename by adding the timestamp
+`backup_filename="${filename%.*}_${timestamp}.${filename##*.}"`
+
+# Combine the backup directory and backup filename to get the full backup path
+`backup_path="${backup_dir}/${backup_filename}"`
+
+# Check if the backup directory exists, and create it if not
+`if [ ! -d "$backup_dir" ]; then
+    mkdir -p "$backup_dir"
+fi
+`
+# Copy the source file to the backup directory
+`cp "$source_file" "$backup_path"`
+
+# Check if the copy was successful
+`if [ $? -eq 0 ]; then
+    echo "Backup created: $backup_path"
+else
+    echo "Failed to create backup."
+fi
+`
+
+![5](./images/5.png)
+
+
+`#Check if a website is online and output a message indicating whether it is up or down.`
+
+# Define the URL of the website you want to check
+`website_url="http://www.dareyio.com"
+`
+# Use curl to send a HEAD request to the website
+`response=$(curl -IsS "$website_url")`
+
+# Check the HTTP status code in the response
+`http_status=$(echo "$response" | head -n 1 | awk '{print $2}')`
+
+# Check if the website is up (HTTP status code 2xx or 3xx)
+`if [[ $http_status =~ ^[23][0-9][0-9]$ ]]; then
+  echo "Website is UP (HTTP Status Code: $http_status)"
+else
+  echo "Website is DOWN (HTTP Status Code: $http_status)"
+fi`
+
+![6](./images/6.png)
+
+# Convert a temperature in Celsius to Fahrenheit, using input from the user.
+# Prompt the user for input
+`read -p "Enter temperature in Celsius: " celsius`
+
+# Check if the input is a valid number
+`if [[ ! "$celsius" =~ ^[+-]?[0-9]+(\.[0-9]+)?$ ]]; then
+  echo "Invalid input. Please enter a valid number."
+  exit 1
+fi`
+
+# Perform the temperature conversion
+`fahrenheit=$(echo "scale=2; ($celsius * 9/5) + 32" | bc)`
+
+# Display the result
+`echo "$celsius degrees Celsius is equal to $fahrenheit degrees Fahrenheit."`
+
+# Ask the user for a sentence
+`echo "Enter a sentence:"
+read sentence`
+
+# Reverse the sentence
+`reversed_sentence=$(echo "$sentence" | rev)`
+
+# Output the reversed sentence
+`echo "Reversed sentence: $reversed_sentence"`
+
+![7](./images/7.png)
+
+
+
+
+
+
+
